@@ -11,6 +11,7 @@ def init():
 	directory = './.notes/master'
 	if not os.path.exists(directory):
 		os.makedirs(directory)
+		current_branch = master
 	else:
 		click.echo("Notes already initiated.")
 
@@ -20,7 +21,23 @@ def init():
 @click.option('-b', is_flag=True)
 @click.argument('branch',required=True)
 def checkout(branch,b):
-	pass
+	branch_dir = './.notes/'+branch
+	if b:
+		if not os.path.exists(branch_dir):
+			os.makedirs(branch_dir)
+			click.echo("Created and switched to branch - "+ branch)
+		else:
+			click.echo("Branch already exists")
+			click.echo("Switched to branch - "+ branch)
+		current_dir = branch_dir
+		current_branch = branch
+	else:
+		if not os.path.exists(branch_dir):
+			click.echo("Branch does not exist. Use \"notes checkout -b branch\" to create the branch first")
+		else:
+			current_dir = branch_dir
+			current_branch = branch
+
 
 
 @cli.command()
