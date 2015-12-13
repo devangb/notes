@@ -1,4 +1,5 @@
 import click
+import os
 
 @click.group()
 def cli():
@@ -7,13 +8,18 @@ def cli():
 
 @cli.command()
 def init():
-	pass
+	directory = './.notes/master'
+	if not os.path.exists(directory):
+		os.makedirs(directory)
+	else:
+		click.echo("Notes already initiated.")
 
 
 
 @cli.command()
+@click.option('-b', is_flag=True)
 @click.argument('branch',required=True)
-def checkout(branch):
+def checkout(branch,b):
 	pass
 
 
